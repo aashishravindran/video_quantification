@@ -14,8 +14,6 @@ from skimage.measure import compare_ssim as ssim
 import matplotlib.pyplot as plt
 #from skimage.metrics import structural_similarity as ssim  for skimage version .0.16
 
-
-
  
 def get_frame(cap):
     dict={} 
@@ -24,11 +22,10 @@ def get_frame(cap):
         # Check if camera opened successfully
     if (cap.isOpened()== False): 
        print("Error opening video stream or file")
- 
-# Read until video is completed
+
     while(cap.isOpened()):
     
-  # Capture frame-by-frame
+
       ret, frame = cap.read()
       if ret == True:
          
@@ -65,10 +62,15 @@ source_cap=cv2.VideoCapture('test.mp4')
 source=get_frame(source_cap)
 
 
+"""
+please add destination file location here
+"""
 trans_cap=cv2.VideoCapture('1_11.mp4')
 received=get_frame(trans_cap)
 
-
+"""
+Computes at a run level the ssi for all the frames
+""""
 similar=get_similarity_index(source,received)
 
 x,y=zip(*(similar.items()))
@@ -80,9 +82,3 @@ overall_loss=((len(source)-len(received))/len(source)*100)
 
 print('Overall Loss at a recv level '+str(overall_loss))
 
-
-
-#a_sparse, b_sparse = sparse.csr_matrix(source_mat), sparse.csr_matrix(dest_mat)
-#
-#sim_sparse = cosine_similarity(a_sparse, b_sparse, dense_output=False)
-#print(sim_sparse)
